@@ -12,25 +12,14 @@ sudo apt-get install -y\
     libhdf5-dev libhdf5-serial-dev libatlas-base-dev libjasper-dev\
     util-linux procps hostapd iproute2 iw haveged dnsmasq
 
-## libqt4-test libqtgui4
-
-sudo pip3 install --upgrade\
-    luma.oled\
-    adafruit-pca9685 rpi_ws281x\
-    mpu6050-raspberrypi\
-    flask flask_cors websockets numpy\
-    imutils zmq pybase64 psutil
-
-sudo pip3 install opencv-contrib-python==3.4.3.18
+sudo pip3 install -Ur requirements.txt
 
 echo "Configuring create_ap"
 #sudo git clone https://github.com/oblique/create_ap
 #cd //home/pi/create_ap && sudo make install
 
 echo "Installing service..."
-#sudo touch //home/pi/startup.sh
-#sudo chmod 777 //home/pi/startup.sh
-#sudo touch /etc/modprobe.d/snd-blacklist.conf
+sudo make install
 
 echo "Restarting..."
 #sudo reboot
