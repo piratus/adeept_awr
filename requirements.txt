@@ -1,0 +1,9 @@
+flask
+flask_cors
+rpi_ws281x
+evdev
+gpiozero
+numpy
+imutils
+opencv-contrib-python==3.4.3.18
+pyPS4Controller

@@ -1,0 +1,17 @@
+[Unit]
+Description=AWR Web Interface
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/adeept_awr
+ExecStart=/usr/bin/python3 ./server/webServer.py
+User=root
+StandardOutput=inherit
+StandardError=inherit
+Restart=on-failure
+#Restart=always
+KillSignal=SIGKILL
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
