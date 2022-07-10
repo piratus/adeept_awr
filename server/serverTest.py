@@ -93,7 +93,7 @@ def info_get():
 
 def info_send_client():
     SERVER_IP = addr[0]
-    SERVER_PORT = 2256   #Define port serial 
+    SERVER_PORT = 2256   #Define port serial
     SERVER_ADDR = (SERVER_IP, SERVER_PORT)
     Info_Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Set connection value for socket
     Info_Socket.connect(SERVER_ADDR)
@@ -108,7 +108,7 @@ def info_send_client():
 
 def ultra_send_client():
     ultra_IP = addr[0]
-    ultra_PORT = 2257   #Define port serial 
+    ultra_PORT = 2257   #Define port serial
     ultra_ADDR = (ultra_IP, ultra_PORT)
     ultra_Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Set connection value for socket
     ultra_Socket.connect(ultra_ADDR)
@@ -116,7 +116,7 @@ def ultra_send_client():
     while 1:
         while ultrasonicMode:
             try:
-                ultra_Socket.send(str(round(ultra.checkdist(),2)).encode())
+                ultra_Socket.send(str(round(ultra.get_distance(), 2)).encode())
                 time.sleep(0.5)
                 continue
             except:
@@ -154,7 +154,7 @@ def run():
     Y_pitch_MAX = 200
     Y_pitch_MIN = -200
 
-    while True: 
+    while True:
         data = ''
         data = str(tcpCliSock.recv(BUFSIZ).decode())
         if not data:
@@ -263,7 +263,7 @@ def run():
 if __name__ == '__main__':
 
     HOST = ''
-    PORT = 10223                              #Define port serial 
+    PORT = 10223                              #Define port serial
     BUFSIZ = 1024                             #Define buffer size
     ADDR = (HOST, PORT)
 

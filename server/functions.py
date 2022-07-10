@@ -113,7 +113,7 @@ class Functions(threading.Thread):
 			while pwm0_pos>pwm0_min:
 				pwm0_pos-=scan_speed
 				pwm.set_pwm(1, 0, pwm0_pos)
-				dist = ultra.checkdist()
+				dist = ultra.get_distance()
 				if dist > 20:
 					continue
 				theta = 180 - (pwm0_pos-100)/2.55 # +30 deviation
@@ -126,7 +126,7 @@ class Functions(threading.Thread):
 			while pwm0_pos<pwm0_max:
 				pwm0_pos+=scan_speed
 				pwm.set_pwm(1, 0, pwm0_pos)
-				dist = ultra.checkdist()
+				dist = ultra.get_distance()
 				if dist > 20:
 					continue
 				theta = (pwm0_pos-100)/2.55
@@ -181,22 +181,22 @@ class Functions(threading.Thread):
 	def automaticProcessing(self):
 		global mark_automatic
 		# print('automaticProcessing')
-		if self.rangeKeep/3 > ultra.checkdist():
+		if self.rangeKeep/3 > ultra.get_distance():
 			move.move(100, 'backward', 'no', 0.5)
 			if mark_automatic != 1:
-				# print(ultra.checkdist())
+				# print(ultra.get_distance())
 				print("backward")
 				mark_automatic = 1
 
-		elif self.rangeKeep > ultra.checkdist():
+		elif self.rangeKeep > ultra.get_distance():
 			move.move(100, 'no', 'left', 0.5)
 			if mark_automatic != 2:
-				# print(ultra.checkdist())
+				# print(ultra.get_distance())
 				print("left")
 		else:
 			move.move(100, 'forward', 'no', 0.5)
 			if mark_automatic != 3:
-				# print(ultra.checkdist())
+				# print(ultra.get_distance())
 				print("forward")
 				mark_automatic = 3
 		time.sleep(0.1)
@@ -227,7 +227,7 @@ class Functions(threading.Thread):
 			self.steadyProcessing()
 		elif self.functionMode == 'trackLine':
 			self.trackLineProcessing()
-			
+
 
 	def run(self):
 		while 1:
