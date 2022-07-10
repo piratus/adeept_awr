@@ -141,7 +141,7 @@ def functionSelect(command_input, response):
 
     elif 'policeOff' == command_input:
         RL.pause()
-        move.motorStop()
+        move.motor_stop()
 
     elif 'automatic' == command_input:
         if OLED_connection:
@@ -153,7 +153,7 @@ def functionSelect(command_input, response):
 
     elif 'automaticOff' == command_input:
         fuc.pause()
-        move.motorStop()
+        move.motor_stop()
 
     elif 'trackLine' == command_input:
         fuc.trackLine()
@@ -170,7 +170,7 @@ def functionSelect(command_input, response):
 
     elif 'steadyCameraOff' == command_input:
         fuc.pause()
-        move.motorStop()
+        move.motor_stop()
 
 
 def switchCtrl(command_input, response):
@@ -190,7 +190,7 @@ def switchCtrl(command_input, response):
         switch.switch(3,1)
 
     elif 'Switch_3_off' in command_input:
-        switch.switch(3,0) 
+        switch.switch(3,0)
 
 
 def robotCtrl(command_input, response):
@@ -198,7 +198,7 @@ def robotCtrl(command_input, response):
     if 'forward' == command_input:
         direction_command = 'forward'
         move.move(speed_set, 'forward', 'no', rad)
-    
+
     elif 'backward' == command_input:
         direction_command = 'backward'
         move.move(speed_set, 'backward', 'no', rad)
@@ -400,7 +400,7 @@ async def recv_msg(websocket):
     direction_command = 'no'
     turn_command = 'no'
 
-    while True: 
+    while True:
         response = {
             'status' : 'ok',
             'title' : '',
@@ -500,7 +500,7 @@ if __name__ == '__main__':
     switch.set_all_switch_off()
 
     HOST = ''
-    PORT = 10223                              #Define port serial 
+    PORT = 10223                              #Define port serial
     BUFSIZ = 1024                             #Define buffer size
     ADDR = (HOST, PORT)
 

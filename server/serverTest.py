@@ -254,7 +254,7 @@ def run():
             FindLineMode   = 0
             FindColorMode  = 0
             tcpCliSock.send(('FunEnd').encode())
-            move.motorStop()
+            move.motor_stop()
 
         else:
             pass

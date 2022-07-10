@@ -37,7 +37,7 @@ WatchDogMode  = 0
 UltraData = 3
 LED  = LED.LED()
 
-class FPV: 
+class FPV:
     def __init__(self):
         self.frame_num = 0
         self.fps = 0
@@ -76,7 +76,7 @@ class FPV:
 
         font = cv2.FONT_HERSHEY_SIMPLEX
 
-        camera = picamera.PiCamera() 
+        camera = picamera.PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 20
         rawCapture = PiRGBArray(camera, size=(640, 480))
@@ -130,19 +130,18 @@ class FPV:
                     else:
                         Y_lock = 1
 
-                    
                     if X < (320-tor*3):
                         move.move(70, 'no', 'left', 0.6)
                         #time.sleep(0.1)
-                        #move.motorStop()
+                        #move.motor_stop()
                         X_lock = 0
                     elif X > (330+tor*3):
                         move.move(70, 'no', 'right', 0.6)
                         #time.sleep(0.1)
-                        #move.motorStop()
+                        #move.motor_stop()
                         X_lock = 0
                     else:
-                        move.motorStop()
+                        move.motor_stop()
                         X_lock = 1
 
                     if X_lock == 1 and Y_lock == 1:
@@ -152,12 +151,12 @@ class FPV:
                             move.move(70, 'backward', 'no', 0.6)
                             print(UltraData)
                         else:
-                            move.motorStop()
-                    
+                            move.motor_stop()
+
 
                 else:
                     cv2.putText(frame_image,'Target Detecting',(40,60), font, 0.5,(255,255,255),1,cv2.LINE_AA)
-                    move.motorStop()
+                    move.motor_stop()
 
                 for i in range(1, len(pts)):
                     if pts[i - 1] is None or pts[i] is None:
@@ -165,7 +164,6 @@ class FPV:
                     thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
                     cv2.line(frame_image, pts[i - 1], pts[i], (0, 0, 255), thickness)
                 ####>>>OpenCV Ends<<<####
-                
 
             if WatchDogMode:
                 gray = cv2.cvtColor(frame_image, cv2.COLOR_BGR2GRAY)
@@ -194,7 +192,7 @@ class FPV:
                     # if the contour is too small, ignore it
                     if cv2.contourArea(c) < 5000:
                         continue
-             
+
                     # compute the bounding box for the contour, draw it on the frame,
                     # and update the text
                     (x, y, w, h) = cv2.boundingRect(c)
