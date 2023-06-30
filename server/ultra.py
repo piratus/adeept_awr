@@ -10,6 +10,6 @@ def get_distance():
     return sens.distance
 
 
-if __name__ == '__main__':
-    print('Scanning...')
-    print('Distance', get_distance(), sep=': ')
+if __name__ == "__main__":
+    print("Scanning...")
+    print("Distance", get_distance(), sep=": ")
