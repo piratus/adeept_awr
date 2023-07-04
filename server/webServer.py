@@ -17,6 +17,7 @@ import websockets
 
 import json
 import app
+import FPV
 
 OLED_connection = 1
 try:
@@ -90,12 +91,6 @@ def replace_num(initial, new_num):  # Call this function to replace data in '.tx
         f.writelines(newline)
 
 
-def FPV_thread():
-    global fpv
-    fpv = FPV.FPV()
-    fpv.capture_thread(addr[0])
-
-
 def ap_thread():
     os.system("sudo create_ap wlan0 eth0 Groovy 12345678")
 
@@ -125,9 +120,9 @@ def functionSelect(command_input, response):
 
     elif "stopCV" == command_input:
         flask_app.modeselect("none")
-        switch.switch(1, 0)
-        switch.switch(2, 0)
-        switch.switch(3, 0)
+        switch.switch(1, False)
+        switch.switch(2, False)
+        switch.switch(3, False)
 
     elif "police" == command_input:
         if OLED_connection:
@@ -170,22 +165,22 @@ def functionSelect(command_input, response):
 
 def switchCtrl(command_input, response):
     if "Switch_1_on" in command_input:
-        switch.switch(1, 1)
+        switch.switch(1, True)
 
     elif "Switch_1_off" in command_input:
-        switch.switch(1, 0)
+        switch.switch(1, False)
 
     elif "Switch_2_on" in command_input:
-        switch.switch(2, 1)
+        switch.switch(2, True)
 
     elif "Switch_2_off" in command_input:
-        switch.switch(2, 0)
+        switch.switch(2, False)
 
     elif "Switch_3_on" in command_input:
-        switch.switch(3, 1)
+        switch.switch(3, True)
 
     elif "Switch_3_off" in command_input:
-        switch.switch(3, 0)
+        switch.switch(3, False)
 
 
 def robotCtrl(command_input, response):
@@ -505,16 +500,14 @@ async def main_logic(websocket, path):
 
 
 if __name__ == "__main__":
-    switch.switchSetup()
-    switch.set_all_switch_off()
+    switch.set_all_off()
 
     HOST = ""
     PORT = 10223  # Define port serial
     BUFSIZ = 1024  # Define buffer size
     ADDR = (HOST, PORT)
 
-    global flask_app
-    flask_app = app.webapp()
+    flask_app = app.WebApp()
     flask_app.startthread()
 
     try:

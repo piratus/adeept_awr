@@ -1,48 +1,34 @@
-#!/usr/bin/env/python
-# File name   : switch.py
-# Production  : HAT
-# Website     : www.gewbot.com
-# Author      : William
-# Date        : 2018/08/22
+from typing import Optional
 
-import RPi.GPIO as GPIO
+from gpiozero import LEDBoard
 
-
-def switchSetup():
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(5, GPIO.OUT)
-    GPIO.setup(6, GPIO.OUT)
-    GPIO.setup(13, GPIO.OUT)
+PORT_0_PIN = 5
+PORT_1_PIN = 6
+PORT_2_PIN = 13
 
 
-def switch(port, status):
-    if port == 1:
-        if status == 1:
-            GPIO.output(5, GPIO.HIGH)
-        elif status == 0:
-            GPIO.output(5, GPIO.LOW)
-        else:
-            pass
-    elif port == 2:
-        if status == 1:
-            GPIO.output(6, GPIO.HIGH)
-        elif status == 0:
-            GPIO.output(6, GPIO.LOW)
-        else:
-            pass
-    elif port == 3:
-        if status == 1:
-            GPIO.output(13, GPIO.HIGH)
-        elif status == 0:
-            GPIO.output(13, GPIO.LOW)
-        else:
-            pass
+leds = LEDBoard(PORT_0_PIN, PORT_1_PIN, PORT_2_PIN)
+
+
+def switch(port: int, status: Optional[bool] = None):
+    """
+    Set port status or toggle if status omitted
+    :param port: Port from 0 to 2
+    :param status: on if True, off if False, toggle if None
+    """
+    if status is None:
+        leds.toggle(port)
+    elif status:
+        leds.on(port)
     else:
-        print("Wrong Command: Example--switch(3, 1)->to switch on port3")
+        leds.off(port)
 
 
-def set_all_switch_off():
-    switch(1, 0)
-    switch(2, 0)
-    switch(3, 0)
+def set_all_off():
+    """Set all ports off"""
+    leds.off()
+
+
+def set_all_on():
+    """Set all ports on"""
+    leds.on()

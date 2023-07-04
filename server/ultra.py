@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from gpiozero import DistanceSensor
 
 TRIGGER_PIN = 11

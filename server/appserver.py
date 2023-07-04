@@ -1,11 +1,3 @@
-#!/usr/bin/env/python
-# File name   : server.py
-# Production  : Gtank
-# Website     : www.gewbot.com
-# E-mail      : gewubot@163.com
-# Author      : William
-# Date        : 2019/10/28
-
 import socket
 import threading
 import time
@@ -16,8 +8,7 @@ import servo
 import switch
 
 servo.servo_init()
-switch.switchSetup()
-switch.set_all_switch_off()
+switch.set_all_off()
 LED = LED.LED()
 LED.colorWipe(80, 255, 0)
 
@@ -166,14 +157,14 @@ def app_ctrl():
             servo_move.resume()
 
         elif data_input == "cStart\n":
-            switch.switch(1, 1)
-            switch.switch(2, 1)
-            switch.switch(3, 1)
+            switch.switch(1, True)
+            switch.switch(2, True)
+            switch.switch(3, True)
 
         elif data_input == "dStart\n":
-            switch.switch(1, 0)
-            switch.switch(2, 0)
-            switch.switch(3, 0)
+            switch.switch(1, False)
+            switch.switch(2, False)
+            switch.switch(3, False)
 
         elif "aStop" in data_input:
             servo_move.pause()

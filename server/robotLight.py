@@ -1,8 +1,5 @@
-#!/usr/bin/env python3
 import time
-import RPi.GPIO as GPIO
-import sys
-from rpi_ws281x import *
+from rpi_ws281x import Adafruit_NeoPixel, Color
 import threading
 
 
@@ -25,12 +22,6 @@ class RobotLight(threading.Thread):
 
         self.lightMode = "none"  # 'none' 'police' 'breath'
 
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(5, GPIO.OUT)
-        GPIO.setup(6, GPIO.OUT)
-        GPIO.setup(13, GPIO.OUT)
-
         # Create NeoPixel object with appropriate configuration.
         self.strip = Adafruit_NeoPixel(
             self.LED_COUNT,
@@ -48,7 +39,6 @@ class RobotLight(threading.Thread):
         self.__flag = threading.Event()
         self.__flag.clear()
 
-    # Define functions which animate LEDs in various ways.
     def setColor(self, R, G, B):
         """Wipe color across display a pixel at a time."""
         color = Color(int(R), int(G), int(B))
@@ -119,50 +109,6 @@ class RobotLight(threading.Thread):
                     self.colorBreathB - (self.colorBreathB * i / self.breathSteps),
                 )
                 time.sleep(0.03)
-
-    def frontLight(self, switch):
-        if switch == "on":
-            GPIO.output(6, GPIO.HIGH)
-            GPIO.output(13, GPIO.HIGH)
-        elif switch == "off":
-            GPIO.output(5, GPIO.LOW)
-            GPIO.output(13, GPIO.LOW)
-
-    def switch(self, port, status):
-        if port == 1:
-            if status == 1:
-                GPIO.output(5, GPIO.HIGH)
-            elif status == 0:
-                GPIO.output(5, GPIO.LOW)
-            else:
-                pass
-        elif port == 2:
-            if status == 1:
-                GPIO.output(6, GPIO.HIGH)
-            elif status == 0:
-                GPIO.output(6, GPIO.LOW)
-            else:
-                pass
-        elif port == 3:
-            if status == 1:
-                GPIO.output(13, GPIO.HIGH)
-            elif status == 0:
-                GPIO.output(13, GPIO.LOW)
-            else:
-                pass
-        else:
-            print("Wrong Command: Example--switch(3, 1)->to switch on port3")
-
-    def set_all_switch_off(self):
-        self.switch(1, 0)
-        self.switch(2, 0)
-        self.switch(3, 0)
-
-    def headLight(self, switch):
-        if switch == "on":
-            GPIO.output(5, GPIO.HIGH)
-        elif switch == "off":
-            GPIO.output(5, GPIO.LOW)
 
     def lightChange(self):
         if self.lightMode == "none":
